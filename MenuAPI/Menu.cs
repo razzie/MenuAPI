@@ -677,6 +677,11 @@ namespace MenuAPI
         /// </summary>
         public void OpenMenu()
         {
+            if (ParentMenu != null && ParentMenu.Visible)
+            {
+                ParentMenu.CloseMenu();
+            }
+
             Visible = true;
             MenuOpenEvent(this);
         }
