@@ -27,6 +27,13 @@ namespace MenuAPI
         public static Control MenuToggleKey { get; set; } = Control.InteractionMenu;
         public static bool EnableMenuToggleKeyOnController { get; set; } = true;
 
+        private static Control? _controller_menu_toggle_key;
+        public static Control ControllerMenuToggleKey
+        {
+            get { return (_controller_menu_toggle_key != null) ? (Control)_controller_menu_toggle_key : MenuToggleKey; }
+            set { _controller_menu_toggle_key = value; }
+        }
+
         internal static Dictionary<MenuItem, Menu> MenuButtons { get; private set; } = new Dictionary<MenuItem, Menu>();
 
         public static Menu MainMenu { get; set; } = null;
@@ -336,7 +343,7 @@ namespace MenuAPI
                             return;
 
                         int tmpTimer = GetGameTimer();
-                        while ((Game.IsControlPressed(0, Control.InteractionMenu) || Game.IsDisabledControlPressed(0, Control.InteractionMenu)) && !Game.IsPaused && IsScreenFadedIn() && !Game.Player.IsDead && !IsPlayerSwitchInProgress() && !DontOpenAnyMenu)
+                        while ((Game.IsControlPressed(0, ControllerMenuToggleKey) || Game.IsDisabledControlPressed(0, ControllerMenuToggleKey)) && !Game.IsPaused && IsScreenFadedIn() && !Game.Player.IsDead && !IsPlayerSwitchInProgress() && !DontOpenAnyMenu)
                         {
                             if (GetGameTimer() - tmpTimer > 400)
                             {
